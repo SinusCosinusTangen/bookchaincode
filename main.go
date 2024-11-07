@@ -12,7 +12,12 @@ type SmartContract struct {
 
 func (e *SmartContract) Init(ctx contractapi.TransactionContext) error {
 	// TODO: insert key
-	return ctx.GetStub().PutState("mykey", []byte("myvalure"))
+	err := ctx.GetStub().PutState("mykey", []byte("myvalure"))
+	if err != nil {
+		return fmt.Errorf("failed to put to world state. %v", err)
+	}
+
+	return nil
 }
 
 func (s *SmartContract) Invoke(ctx contractapi.TransactionContext) error {
